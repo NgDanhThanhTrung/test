@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nguyễn Danh Thành Trung | Profile & Payment</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Thêm phông chữ nghệ thuật Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root { 
@@ -29,7 +30,20 @@
         .card { width: 92%; max-width: 400px; padding: 40px 20px; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border-white); border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; animation: fadeInUp 1s ease-out; z-index: 10; transition: transform 0.2s ease-out; }
         .avatar { width: 80px; height: 80px; margin: 0 auto 20px; background: #1e293b; border-radius: 25px; display: grid; place-items: center; font-size: 1.8rem; color: var(--primary); border: 1px solid var(--border-white); box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
         
-        h1 { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; letter-spacing: 1.2px; text-transform: uppercase; background: linear-gradient(to right, #fff 20%, var(--primary) 40%, #fff 60%, var(--primary) 80%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; }
+        /* Cập nhật Font chữ cho tên */
+        .display-name { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            margin-bottom: 4px; 
+            background: linear-gradient(to right, #fff, var(--primary), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
         @keyframes shine { to { background-position: 200% center; } }
         
         .tag { color: var(--primary); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.7; }
@@ -67,7 +81,7 @@
         .qr-modal-content { background: #fff; color: #020617; border-radius: 24px; padding: 25px; width: 100%; max-width: 360px; text-align: center; }
         .qr-container { background: #f1f5f9; padding: 12px; border-radius: 16px; margin: 20px 0; }
         .qr-image { width: 100%; border-radius: 8px; display: block; }
-        .btn-close { width: 100%; padding: 14px; border: none; border-radius: 14px; background: #020617; color: #fff; font-weight: 700; cursor: pointer; }
+        .btn-close { width: 100%; padding: 14px; border: none; border-radius: 14px; background: #020617; color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
 
         /* Toast */
         .toast { position: fixed; top: 30px; left: 50%; transform: translate(-50%, -20px); background: var(--primary); color: #020617; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.85rem; z-index: 3000; opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
@@ -84,6 +98,7 @@
         @media (max-width: 480px) {
             .card { padding: 30px 15px; }
             .btn-donate { top: 15px; right: 15px; padding: 8px 14px; font-size: 0.75rem; }
+            .display-name { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -95,7 +110,8 @@
     <!-- Main Card -->
     <div class="card" id="mainCard">
         <div class="avatar"><i class="fa-solid fa-user-ninja"></i></div>
-        <h1>Nguyễn Danh Thành Trung</h1>
+        <!-- Sử dụng class display-name cho phông chữ mới -->
+        <div class="display-name">Nguyễn Danh Thành Trung</div>
         <p class="tag">Digital Creator & Developer</p>
         <div class="links" id="linksContainer"></div>
     </div>
@@ -112,7 +128,7 @@
             <div class="avatar" style="width: 60px; height: 60px; font-size: 1.2rem; margin-bottom: 15px; border-radius: 18px;">
                 <i class="fa-solid fa-wallet"></i>
             </div>
-            <h1 style="font-size: 1.1rem;">THANH TOÁN</h1>
+            <h1 style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; letter-spacing: 1px;">THANH TOÁN</h1>
             <p style="color: var(--text-dim); font-size: 0.8rem;">Chọn phương thức để ủng hộ mình nhé</p>
             
             <div class="bank-list">
@@ -194,9 +210,7 @@
     <script>
         // --- DATA CONFIG ---
         const links = [
-            { name: 'Facebook', icon: 'fa-brands fa-facebook', color: '#1877F2', url: 'https://m.facebook.com/ThanhTrung53' },
-            { name: 'Instagram', icon: 'fa-brands fa-instagram', color: '#E1306C', url: 'https://instagram.com/ttrungisme.bi' },
-            { name: 'TikTok', icon: 'fa-brands fa-tiktok', color: '#fff', url: 'https://www.tiktok.com/@thanhtrungnguyendanh' },
+            { name: 'GitHub', icon: 'fa-brands fa-github', color: '#fff', url: 'https://github.com/NgDanhThanhTrung' },
             { name: 'Telegram', icon: 'fa-brands fa-telegram', color: '#26A5E4', url: 'https://t.me/NgDanhThanhTrung' },
             { name: 'Locket Gold', icon: 'fa-solid fa-heart', color: '#FFD700', url: 'https://ngdanhthanhtrung.github.io/locket/' },
             { name: 'Link Modules', icon: 'fa-solid fa-rocket', color: '#00f2fe', url: 'https://ngdanhthanhtrung.github.io/My-Modules/' }
