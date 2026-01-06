@@ -30,11 +30,18 @@ Hệ thống thanh toán tích hợp sẵn các cổng:
 ---
 
 ## 🤝 Liên hệ
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NgDanhThanhTrung)
+[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/NgDanhThanhTrung)
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://fb.com/NgDanhThanhTrung)
+
 * **Author:** Nguyễn Danh Thành Trung
-* **GitHub:** [@NgDanhThanhTrung](https://github.com/NgDanhThanhTrung)
-* **Telegram:** [@NgDanhThanhTrung](https://t.me/NgDanhThanhTrung)
 
 ---
 
 > [!TIP]
 > Nếu bạn thấy dự án này hữu ích, hãy tặng nó một ⭐ trên **GitHub** nhé!
+
+<p align="center">
+  <img src="https://img.shields.io/github/stars/NgDanhThanhTrung/ten-repo?style=social" alt="GitHub Repo stars">
+</p>
