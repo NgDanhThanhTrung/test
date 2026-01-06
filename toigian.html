@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Danh Thành Trung | Profile & Payment Premium</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #00f2fe; 
+            --accent: #f0abfc;
+            --locket-gold: #FFD700;
+            --white: #ffffff; 
+            --glass-bg: rgba(15, 23, 42, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-dark: #010409;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient-main: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg-dark);
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+            perspective: 1500px;
+        }
+        
+        .ambient-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .glow-1 { top: -20%; left: -20%; background: var(--primary); }
+        .glow-2 { bottom: -20%; right: -20%; background: var(--accent); }
+
+        canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+        .card { 
+            width: 90%; 
+            max-width: 400px; 
+            padding: 45px 30px; 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(40px) saturate(180%); 
+            -webkit-backdrop-filter: blur(40px) saturate(180%); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 40px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            text-align: center; 
+            animation: cardEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            z-index: 10; 
+            position: relative;
+        }
+
+        .avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 28px; }
+        .avatar { 
+            width: 100%; height: 100%; 
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border-radius: 50%; 
+            display: grid; place-items: center; 
+            font-size: 2.5rem; color: var(--primary); 
+            border: 2px solid var(--glass-border);
+            position: relative; z-index: 2;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+        .avatar:hover { transform: scale(1.1) rotate(5deg); border-color: var(--primary); color: var(--white); box-shadow: 0 0 30px rgba(0, 242, 254, 0.4); }
+
+        .avatar-glow {
+            position: absolute; inset: -5px;
+            background: var(--gradient-main);
+            border-radius: 50%; filter: blur(15px);
+            opacity: 0.3; z-index: 1;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow { from { opacity: 0.2; transform: scale(0.95); } to { opacity: 0.5; transform: scale(1.05); } }
+        
+        .display-name { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; 
+            background: linear-gradient(to bottom, #ffffff 40%, #cbd5e1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .tag { 
+            color: var(--primary); font-size: 0.6rem; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px;
+            opacity: 0.8; display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .tag::before, .tag::after { content: ""; width: 15px; height: 1px; background: rgba(0, 242, 254, 0.3); }
+        
+        .links { display: grid; gap: 12px; }
+        .btn { 
+            display: flex; align-items: center; padding: 14px 18px; 
+            background: rgba(255, 255, 255, 0.04); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 18px; color: var(--text-main); 
+            text-decoration: none; font-size: 0.9rem; font-weight: 500; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            opacity: 0; transform: translateY(20px); 
+        }
+        .btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(0, 242, 254, 0.5); transform: translateX(5px); }
+
+        .btn i:first-child { width: 28px; font-size: 1.1rem; text-align: center; }
+        .btn span { flex: 1; text-align: left; margin-left: 12px; }
+        .fa-chevron-right { font-size: 0.65rem; opacity: 0.2; transition: 0.3s; }
+        .btn:hover .fa-chevron-right { opacity: 0.6; transform: translateX(5px); }
+
+        .btn-donate-fixed { 
+            position: fixed; top: 25px; right: 25px; 
+            display: flex; align-items: center; gap: 10px; padding: 10px 20px; 
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+            border: 1px solid var(--glass-border); border-radius: 100px; 
+            color: #fff; text-decoration: none; font-weight: 600; font-size: 0.75rem; 
+            z-index: 100; transition: 0.4s; cursor: pointer;
+        }
+        
+        .modal-overlay { 
+            position: fixed; inset: 0; background: rgba(0, 2, 8, 0.85); 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
+            display: none; place-items: center; z-index: 1000; padding: 20px; 
+        }
+        .modal-card { 
+            background: rgba(20, 30, 50, 0.6); border: 1px solid var(--glass-border); 
+            border-radius: 35px; padding: 40px 25px; width: 100%; max-width: 420px; 
+            text-align: center; position: relative; 
+        }
+
+        .btn-back {
+            position: absolute; top: 20px; left: 20px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            color: var(--white); display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+        
+        .modal-card h1 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.1rem; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--white); margin-top: 5px;
+        }
+
+        .bank-list { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
+        .bank-group { display: flex; gap: 8px; }
+        
+        .bank-item-main { 
+            flex: 1; background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid var(--glass-border); border-radius: 20px; 
+            padding: 12px 15px; display: flex; align-items: center; gap: 12px; 
+            cursor: pointer; transition: 0.3s; 
+        }
+        .bank-item-main:hover { background: rgba(255, 255, 255, 0.07); }
+        
+        .qr-side-btn { 
+            width: 54px; background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid var(--glass-border); border-radius: 20px; 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; color: var(--primary); 
+        }
+        .qr-side-btn:hover { background: var(--primary); color: var(--bg-dark); }
+
+        .logo-wrapper { 
+            width: 40px; height: 40px; background: #fff; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 0.65rem; flex-shrink: 0;
+        }
+
+        .qr-modal-container { 
+            background: #ffffff; color: #020617; border-radius: 35px; 
+            padding: 40px 30px; width: 100%; max-width: 360px; text-align: center;
+        }
+        .qr-box { background: #f8fafc; padding: 10px; border-radius: 20px; margin: 25px 0; border: 1px solid #e2e8f0; }
+        .qr-box img { width: 100%; border-radius: 12px; }
+
+        .toast { 
+            position: fixed; bottom: 30px; left: 50%; transform: translate(-50%, 20px); 
+            background: var(--white); color: #0f172a; padding: 12px 24px; 
+            border-radius: 100px; font-weight: 600; font-size: 0.8rem; 
+            z-index: 3000; opacity: 0; transition: 0.4s; 
+        }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+        @keyframes cardEntrance { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @media (max-width: 480px) {
+            .display-name { font-size: 1.9rem; }
+            .btn-donate-fixed { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <canvas id="bgCanvas"></canvas>
+    
+    <div id="toast" class="toast">Đã sao chép</div>
+
+    <div class="card" id="mainCard">
+        <div class="avatar-container">
+            <div class="avatar-glow"></div>
+            <div class="avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+        </div>
+        <div class="display-name">Nguyễn Danh Thành Trung</div>
+        <p class="tag">Learn about digital technology</p>
+        <div class="links" id="linksContainer"></div>
+    </div>
+
+    <div class="btn-donate-fixed" onclick="toggleModal('donateModal', true)">
+        <i class="fa-solid fa-heart"></i><span>Donate</span>
+    </div>
+
+    <div class="modal-overlay" id="donateModal" onclick="toggleModal('donateModal', false)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="btn-back" onclick="toggleModal('donateModal', false)"><i class="fa-solid fa-arrow-left"></i></div>
+            <i class="fa-solid fa-crown" style="color: var(--locket-gold); font-size: 1.8rem;"></i>
+            <h1>Premium Support</h1>
+            <div class="bank-list" id="bankList"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="qrModal" style="z-index: 2000;" onclick="toggleModal('qrModal', false)">
+        <div class="qr-modal-container" onclick="event.stopPropagation()">
+            <div id="modalBankTitle" style="font-weight: 800; font-size: 0.9rem; color: #64748b;">MÃ QR</div>
+            <div class="qr-box"><img id="qrImg" src="" alt="QR"></div>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 25px;">Chủ tài khoản: <strong>NGUYEN DANH THANH TRUNG</strong></p>
+            <button style="width: 100%; padding: 14px; border-radius: 16px; background: #0f172a; color: #fff; border:none; font-weight:700; cursor:pointer;" onclick="toggleModal('qrModal', false)">ĐÓNG</button>
+        </div>
+    </div>
+
+    <script>
+        const links = [
+            { name: 'GitHub Projects', icon: 'fa-brands fa-github', color: '#f8fafc', url: 'https://github.com/NgDanhThanhTrung' },
+            { name: 'Telegram', icon: 'fa-brands fa-telegram', color: '#229ED9', url: 'https://t.me/NgDanhThanhTrung' },
+            { name: 'Locket Gold', icon: 'fa-solid fa-heart', color: '#FFD700', url: 'https://ngdanhthanhtrung.github.io/locket/' },
+            { name: 'Modules', icon: 'fa-solid fa-rocket', color: '#00f2fe', url: 'https://ngdanhthanhtrung.github.io/My-Modules/' }
+        ];
+
+        const banks = [
+            { id: 'MBV', name: 'Oceanbank', id_no: '538888888888', color: '#0082c8' },
+            { id: 'MB', name: 'MB Bank', id_no: '56002005032008', color: '#1e40af' },
+            { id: 'SPP', name: 'ShopeePay', id_no: '0981506719', color: '#ee4d2d' },
+            { id: 'MOMO', name: 'MoMo', id_no: '0981506719', color: '#a50064' }
+        ];
+
+        // Render Links
+        const container = document.getElementById('linksContainer');
+        links.forEach((l, i) => {
+            const a = document.createElement('a');
+            a.className = 'btn'; a.href = l.url; a.target = '_blank';
+            a.style.animation = `cardEntrance 1s ease forwards ${0.3 + i * 0.1}s`;
+            a.innerHTML = `<i class="${l.icon}" style="color:${l.color}"></i><span>${l.name}</span><i class="fa-solid fa-chevron-right"></i>`;
+            container.appendChild(a);
+        });
+
+        // Render Banks
+        const bankList = document.getElementById('bankList');
+        banks.forEach(b => {
+            const div = document.createElement('div');
+            div.className = 'bank-group';
+            div.innerHTML = `
+                <div class="bank-item-main" onclick="copyText('${b.id_no}', '${b.name}')">
+                    <div class="logo-wrapper" style="color: ${b.color}">${b.id}</div>
+                    <div style="text-align: left; flex: 1;">
+                        <div style="font-size: 0.65rem; font-weight: 700; color: var(--primary);">${b.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-dim);">${b.id_no}</div>
+                    </div>
+                </div>
+                <div class="qr-side-btn" onclick="openQR('${b.id}', '${b.name}')"><i class="fa-solid fa-qrcode"></i></div>`;
+            bankList.appendChild(div);
+        });
+
+        function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'grid' : 'none'; }
+        
+        function copyText(text, label) {
+            navigator.clipboard.writeText(text).then(() => {
+                const t = document.getElementById('toast');
+                t.innerText = "Đã copy " + label; t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 2000);
+            });
+        }
+
+        function openQR(key, name) {
+            document.getElementById('qrImg').src = `https://raw.githubusercontent.com/NgDanhThanhTrung/Bank/main/QR_${key}.jpg`;
+            document.getElementById('modalBankTitle').innerText = name;
+            toggleModal('qrModal', true);
+        }
+
+        // Background Particles
+        const canvas = document.getElementById('bgCanvas'), ctx = canvas.getContext('2d');
+        let dots = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            dots = Array.from({ length: 40 }, () => ({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+            }));
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 242, 254, 0.1)";
+            dots.forEach(d => {
+                d.x += d.vx; d.y += d.vy;
+                if(d.x < 0 || d.x > canvas.width) d.vx *= -1;
+                if(d.y < 0 || d.y > canvas.height) d.vy *= -1;
+                ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+
+        window.onresize = init;
+        window.onload = () => { init(); draw(); };
+    </script>
+</body>
+</html>
