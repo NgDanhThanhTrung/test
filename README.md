@@ -18,22 +18,23 @@
 
 ---
 
-## 🛠️ Cài đặt và Sử dụng
+## 💳 Thông tin Donate
+Hệ thống thanh toán tích hợp sẵn các cổng:
 
-### 1. Sao chép Mã nguồn
-Bạn chỉ cần tạo một file `index.html` và dán toàn bộ đoạn code dưới đây vào:
+| Cổng thanh toán | Số tài khoản / Số điện thoại |
+| :--- | :--- |
+| **Oceanbank (MBV)** | `538888888888` |
+| **MB Bank** | `56002005032008` |
+| **Ví MoMo / ShopeePay** | `0981506719` |
 
-<details>
-<summary>👉 Nhấn để xem đoạn code HTML full</summary>
+---
 
-```html
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyễn Danh Thành Trung | Profile & Payment Premium</title>
-    </head>
-<body>
-    </body>
-</html>
+## 🤝 Liên hệ
+* **Author:** Nguyễn Danh Thành Trung
+* **GitHub:** [@NgDanhThanhTrung](https://github.com/NgDanhThanhTrung)
+* **Telegram:** [@NgDanhThanhTrung](https://t.me/NgDanhThanhTrung)
+
+---
+
+> [!TIP]
+> Nếu bạn thấy dự án này hữu ích, hãy tặng nó một ⭐ trên **GitHub** nhé!
